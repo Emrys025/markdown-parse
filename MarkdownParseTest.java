@@ -32,5 +32,41 @@ public class MarkdownParseTest {
     public void noLinkFileTest() throws IOException{
         assertEquals(List.of(), MarkdownParse.getLinks(Files.readString(Path.of("noLinkFile.md"))));
     }
+
+    @Test
+    public void testFile2Test() throws IOException{
+        assertEquals(List.of("https://something.com","some-page.html"), MarkdownParse.getLinks(Files.readString(Path.of("test-file2.md"))));
+    }
+
+    @Test
+    public void testFile3Test() throws IOException{
+        assertEquals(List.of(), MarkdownParse.getLinks(Files.readString(Path.of("test-file3.md"))));
+    }
+
+    @Test
+    public void testFile4Test() throws IOException{
+        assertEquals(List.of(), MarkdownParse.getLinks(Files.readString(Path.of("test-file4.md"))));
+    }
+
+    @Test
+    public void testFile5Test() throws IOException{
+        assertEquals(List.of(), MarkdownParse.getLinks(Files.readString(Path.of("test-file5.md"))));
+    }
+
+    @Test
+    public void testFile6Test() throws IOException{
+        assertEquals(List.of(), MarkdownParse.getLinks(Files.readString(Path.of("test-file6.md"))));
+    }
+
+    @Test
+    public void testFile7Test() throws IOException{
+        assertEquals(List.of(), MarkdownParse.getLinks(Files.readString(Path.of("test-file7.md"))));
+    }
+
+    @Test
+    public void testFile8Test() throws IOException{
+        assertEquals(List.of("a link on the first line"), MarkdownParse.getLinks(Files.readString(Path.of("test-file8.md"))));
+    }
+
 }
 
