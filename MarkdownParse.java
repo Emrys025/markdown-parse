@@ -10,33 +10,39 @@ public class MarkdownParse {
         // find the next [, then find the ], then find the (, then take up to
         // the next )
         int currentIndex = 0;
-        boolean validLink = true;
         while(currentIndex < markdown.length()) {
-		if(markdown.indexOf("/",currentIndex)!=-1){
-                     int nextOpenBracket = markdown.indexOf("[", currentIndex);
-                     int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
-                     int openParen = markdown.indexOf("(", nextCloseBracket);
-                     int closeParen = markdown.indexOf(")", openParen);
-                     if(nextOpenBracket == -1 || nextCloseBracket == -1 || openParen == -1 || closeParen == -1){
-                         return toReturn;
-                     }
-                    if((nextOpenBracket != 0  && markdown.charAt(nextOpenBracket - 1) == '!')
-                         || (openParen != nextCloseBracket + 1)){
-                          validLink = false;
-                     }
-                    if(markdown.substring(openParen + 1, closeParen).contains(" ")){
-                         validLink = false;
-                     }
-                    if(validLink) {
-                         toReturn.add(markdown.substring(openParen + 1, closeParen));
-                     }
-                     currentIndex = closeParen + 1;
-                     System.out.println(currentIndex);
-		}
-		else{currentIndex = markdown.indexOf("]",currentIndex);
-		}
+            boolean validLink = true;
+            int nextOpenBracket = markdown.indexOf("[", currentIndex);
+            int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
+            int openParen = markdown.indexOf("(", nextCloseBracket);
+            int closeParen = markdown.indexOf(")", openParen);
+            if(nextOpenBracket == -1 || nextCloseBracket == -1 || openParen == -1 || closeParen == -1){
+                return toReturn;
+            }
+            if(nextOpenBracket != 0 && markdown.charAt(nextOpenBracket - 1) == '\\'){
+                int index = nextOpenBracket - 2;
+                int count = 1;
+                while(index >= 0 && markdown.charAt(index) == '\\'){
+                    count++;
+                    index--;
+                }
+                if(count % 2 == 1){
+                    validLink = false;
+                }
+            }
+            if((nextOpenBracket != 0  && markdown.charAt(nextOpenBracket - 1) == '!')
+                || (openParen != nextCloseBracket + 1)){
+                validLink = false;
+            }
+            if(markdown.substring(openParen, closeParen).contains(" ")){
+                validLink = false;
+            }
+            if(validLink) {
+                toReturn.add(markdown.substring(openParen + 1, closeParen));
+            }
+            currentIndex = closeParen + 1;
+            System.out.println(currentIndex);
         }
-	
         return toReturn;
     }
     public static void main(String[] args) throws IOException {
